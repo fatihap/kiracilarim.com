@@ -6,7 +6,9 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
-import Dashboard from './components/Dashboard';
+import TenantsPage from './components/TenantsPage';
+import TenantDetailPage from './components/TenantDetailPage';
+import AddTenantPage from './components/AddTenantPage'; 
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -44,10 +46,25 @@ function App() {
           />
           <Route path="/register" element={<Register />} />
           <Route
-            path="/dashboard"
+            path="/tenants"
             element={
               <PrivateRoute>
-                <Dashboard user={user} />
+                <TenantsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route path='/tenants/:id'
+            element={
+              <PrivateRoute>
+                <TenantDetailPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/add-tenant"
+            element={
+              <PrivateRoute>
+                <AddTenantPage />
               </PrivateRoute>
             }
           />
