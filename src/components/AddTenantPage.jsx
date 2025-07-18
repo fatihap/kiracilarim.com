@@ -87,7 +87,7 @@ const AddTenantPage = () => {
           <input
             name="phone"
             placeholder="Telefon (05XXXXXXXXX)"
-            required
+           // required
             className="w-full p-3 border rounded"
             value={form.phone}
             onChange={handleChange}

@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 // Components
 import Navbar from './components/Navbar';
 import Home from './components/Home';
@@ -9,7 +10,7 @@ import Register from './components/Register';
 import TenantsPage from './components/TenantsPage';
 import TenantDetailPage from './components/TenantDetailPage';
 import AddTenantPage from './components/AddTenantPage'; 
-
+import EditTenantPage from './components/EditTenantPage';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -68,7 +69,17 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+          path='/kiraci-duzenle'
+          element={
+            <PrivateRoute>
+              <EditTenantPage/>
+            </PrivateRoute>
+          }
+          ></Route>
         </Routes>
+                <ToastContainer position="top-right" autoClose={2500} />
+
       </div>
     </Router>
   );
