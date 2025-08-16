@@ -8,7 +8,7 @@ import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import TenantsPage from './components/TenantsPage';
-import TenantDetailPage from './components/TenantDetailPage';
+import TenantDetailPage from './components/TenantDetails/TenantDetailPage';
 import AddTenantPage from './components/AddTenantPage'; 
 import EditTenantPage from './components/EditTenantPage';
 function App() {

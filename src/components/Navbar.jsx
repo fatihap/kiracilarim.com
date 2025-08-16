@@ -17,7 +17,26 @@ const Navbar = ({ isLoggedIn, user, onLogout }) => {
             </Link>
           </div>
 
-         
+          <div className="flex items-center space-x-4">
+            {!isLoggedIn ? (
+              <>
+               
+
+              </>
+            ) : (
+              <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-2">
+                  <span className="text-gray-700">Hoş geldiniz, {user?.name}</span>
+                  <button
+                    onClick={onLogout}
+                    className="bg-red-600 text-white px-4 py-2 rounded-full hover:bg-red-700 transition duration-300 shadow-sm hover:shadow-md"
+                  >
+                    Çıkış Yap
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </nav>
