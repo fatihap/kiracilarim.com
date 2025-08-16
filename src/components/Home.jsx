@@ -1,13 +1,56 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
 const Home = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Kullanıcı token'ı varsa giriş yapılmış kabul edelim
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-gray-100">
+      
+      {/* Üst sağ butonlar */}
+      <motion.div
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 0.4 }}
+  className="mt-10 flex justify-center gap-6"
+>
+  {isLoggedIn ? (
+    <Link
+      to="/tenants"
+      className="px-8 py-4 text-lg font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg transform hover:scale-105 transition"
+    >
+      Kira Sistemine Git
+    </Link>
+  ) : (
+    <>
+      <Link
+        to="/login"
+        className="px-8 py-4 text-lg font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg transform hover:scale-105 transition"
+      >
+        Hemen Başla
+      </Link>
+      <Link
+        to="/register"
+        className="px-8 py-4 text-lg font-semibold border-2 border-blue-600 text-blue-600 bg-white hover:bg-blue-50 rounded-xl shadow-md transform hover:scale-105 transition"
+      >
+        Kayıt Ol
+      </Link>
+    </>
+  )}
+</motion.div>
+
+
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         {/* Hero Section */}
         <div className="text-center mb-28">
-          <motion.h1 
+          <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -15,7 +58,7 @@ const Home = () => {
           >
             Kiracılarım.com
           </motion.h1>
-          <motion.p 
+          <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -23,28 +66,9 @@ const Home = () => {
           >
             Kira takibinizi dijitalleştirin, kiracılarınızı yönetin, belgelerinizi güvenle saklayın.
           </motion.p>
-
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="mt-10 flex justify-center gap-6"
-          >
-            <Link
-              to="/login"
-              className="px-8 py-4 text-lg font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg transform hover:scale-105 transition"
-            >
-              Hemen Başla
-            </Link>
-            <Link
-              to="/register"
-              className="px-8 py-4 text-lg font-semibold border-2 border-blue-600 text-blue-600 bg-white hover:bg-blue-50 rounded-xl shadow-md transform hover:scale-105 transition"
-            >
-              Kayıt Ol
-            </Link>
-          </motion.div>
         </div>
 
+      
         {/* Features Section */}
         <motion.h2 
           initial={{ opacity: 0, y: 20 }}

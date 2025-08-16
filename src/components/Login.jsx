@@ -1,9 +1,7 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from 'react-router-dom';
-
 
 const Login = ({ onLogin, setUser }) => {
   const navigate = useNavigate();
@@ -14,10 +12,20 @@ const Login = ({ onLogin, setUser }) => {
 
   const togglePasswordVisibility = () => setPasswordShown(!passwordShown);
 
+  // Sayfa açıldığında localStorage kontrolü
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedUser = localStorage.getItem('user');
+    if (token && storedUser) {
+      setUser(JSON.parse(storedUser));
+      onLogin(true);
+      navigate('/tenants'); // Token varsa otomatik yönlendir
+    }
+  }, [navigate, onLogin, setUser]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    navigate('/tenants')
 
     try {
       const response = await fetch('https://kiracilarim.com/api/login', {
@@ -29,9 +37,13 @@ const Login = ({ onLogin, setUser }) => {
       const data = await response.json();
       if (!response.ok) throw new Error(data.message || 'Giriş başarısız');
 
+      // Token ve kullanıcı bilgilerini localStorage'a kaydet
       localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+
       onLogin(true);
       setUser(data.user);
+
       navigate('/tenants');
     } catch (err) {
       setError(err.message);
@@ -62,7 +74,6 @@ const Login = ({ onLogin, setUser }) => {
         )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Email Field */}
           <div className="relative">
             <FontAwesomeIcon
               icon={faEnvelope}
@@ -80,7 +91,6 @@ const Login = ({ onLogin, setUser }) => {
             />
           </div>
 
-          {/* Password Field */}
           <div className="relative">
             <FontAwesomeIcon
               icon={faLock}
@@ -103,7 +113,6 @@ const Login = ({ onLogin, setUser }) => {
             />
           </div>
 
-          {/* Submit Button */}
           <button
             type="submit"
             className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 transition duration-200"
