@@ -11,6 +11,7 @@ import TenantsPage from './components/TenantsPage';
 import TenantDetailPage from './components/TenantDetails/TenantDetailPage';
 import AddTenantPage from './components/AddTenantPage'; 
 import EditTenantPage from './components/EditTenantPage';
+import Profile from './components/Profile';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -77,6 +78,12 @@ function App() {
             </PrivateRoute>
           }
           ></Route>
+          <Route path='/profile'
+          element={
+           <Profile/>
+
+          }
+          />
         </Routes>
                 <ToastContainer position="top-right" autoClose={2500} />
 

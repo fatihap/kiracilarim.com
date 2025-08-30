@@ -24,7 +24,7 @@ const Home = () => {
   {isLoggedIn ? (
     <Link
       to="/tenants"
-      className="px-8 py-4 text-lg font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg transform hover:scale-105 transition"
+      className="px-8 py-4 text-lg mt-20 font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 shadow-lg transform hover:scale-105 transition"
     >
       Kira Sistemine Git
     </Link>
