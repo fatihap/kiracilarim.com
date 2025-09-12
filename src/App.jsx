@@ -4,14 +4,16 @@ import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 // Components
 import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 import Home from './components/Home';
 import Login from './components/Login';
 import Register from './components/Register';
 import TenantsPage from './components/TenantsPage';
 import TenantDetailPage from './components/TenantDetails/TenantDetailPage';
-import AddTenantPage from './components/AddTenantPage'; 
+import AddTenantPage from './components/AddTenantPage';
 import EditTenantPage from './components/EditTenantPage';
 import Profile from './components/Profile';
+import ContactPage from './components/ContactPage';
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -30,7 +32,7 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50 flex flex-col">
         <Navbar
           isLoggedIn={isLoggedIn}
           user={user}
@@ -40,53 +42,56 @@ function App() {
             setUser(null);
           }}
         />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route
-            path="/login"
-            element={<Login onLogin={setIsLoggedIn} setUser={setUser} />}
-          />
-          <Route path="/register" element={<Register />} />
-          <Route
-            path="/tenants"
+        <main className="flex-1">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/login"
+              element={<Login onLogin={setIsLoggedIn} setUser={setUser} />}
+            />
+            <Route path="/register" element={<Register />} />
+            <Route
+              path="/tenants"
+              element={
+                <PrivateRoute>
+                  <TenantsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route path='/tenants/:id'
+              element={
+                <PrivateRoute>
+                  <TenantDetailPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/add-tenant"
+              element={
+                <PrivateRoute>
+                  <AddTenantPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+            path='/kiraci-duzenle'
             element={
               <PrivateRoute>
-                <TenantsPage />
+                <EditTenantPage/>
               </PrivateRoute>
             }
-          />
-          <Route path='/tenants/:id'
+            ></Route>
+            <Route path='/profile'
             element={
-              <PrivateRoute>
-                <TenantDetailPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/add-tenant"
-            element={
-              <PrivateRoute>
-                <AddTenantPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-          path='/kiraci-duzenle'
-          element={
-            <PrivateRoute>
-              <EditTenantPage/>
-            </PrivateRoute>
-          }
-          ></Route>
-          <Route path='/profile'
-          element={
-           <Profile/>
+             <Profile/>
 
-          }
-          />
-        </Routes>
-                <ToastContainer position="top-right" autoClose={2500} />
-
+            }
+            />
+            <Route path='/contact' element={<ContactPage />} />
+          </Routes>
+        </main>
+        <Footer />
+        <ToastContainer position="top-right" autoClose={2500} />
       </div>
     </Router>
   );

@@ -1,5 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { 
+  User, 
+  Phone, 
+  MapPin, 
+  Building2, 
+  Calendar, 
+  DollarSign, 
+  FileText, 
+  ArrowLeft,
+  Plus,
+  CheckCircle,
+  AlertCircle,
+  Save,
+  Home,
+  Store
+} from 'lucide-react';
 
 const AddTenantPage = () => {
   const navigate = useNavigate();
@@ -17,6 +34,7 @@ const AddTenantPage = () => {
   });
   const [errors, setErrors] = useState({});
   const [apiError, setApiError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     let { name, value } = e.target;
@@ -55,6 +73,7 @@ const AddTenantPage = () => {
     setApiError('');
     if (!validateForm()) return;
 
+    setIsLoading(true);
     const payload = {
       name: form.name,
       surname: form.surname,
@@ -87,6 +106,8 @@ const AddTenantPage = () => {
       navigate('/tenants');
     } catch (err) {
       setApiError(err.message);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -97,117 +118,326 @@ const AddTenantPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-green-50 flex items-center justify-center px-4 py-12 font-sans">
-      <div className="w-full max-w-3xl bg-white p-12 rounded-3xl shadow-2xl border border-gray-200">
-        <h2 className="text-4xl font-bold text-blue-700 text-center mb-2">Yeni Kiracı Ekle</h2>
-        <p className="text-gray-500 text-center mb-8">Formu doldurarak hızlıca yeni bir kiracı kaydı oluşturun.</p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 py-10 px-4 relative overflow-hidden pt-24">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+        <div className="absolute top-40 left-1/2 w-80 h-80 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
+      </div>
 
-        {apiError && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded mb-6 text-center">
-            {apiError}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <input
-              name="name"
-              placeholder="Ad"
-              className={`p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 ${getBorderColor('name')} transition duration-200`}
-              value={form.name}
-              onChange={handleChange}
-            />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
-
-            <input
-              name="surname"
-              placeholder="Soyad"
-              className={`p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 ${getBorderColor('surname')} transition duration-200`}
-              value={form.surname}
-              onChange={handleChange}
-            />
-            {errors.surname && <p className="text-red-500 text-sm mt-1">{errors.surname}</p>}
-          </div>
-
-          <input
-            name="phone"
-            placeholder="Telefon (05XX XXX XX XX)"
-            type="tel"
-            className={`w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 ${getBorderColor('phone')} transition duration-200`}
-            value={form.phone}
-            onChange={handleChange}
-          />
-          {errors.phone && <p className="text-red-500 text-sm mt-1">{errors.phone}</p>}
-
-          <textarea
-            name="address"
-            placeholder="Adres"
-            className={`w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 resize-none ${getBorderColor('address')} transition duration-200`}
-            rows={3}
-            value={form.address}
-            onChange={handleChange}
-          />
-          {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <select
-              name="type"
-              className={`p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 ${getBorderColor('type')} transition duration-200`}
-              value={form.type}
-              onChange={handleChange}
+      <div className="relative z-10 max-w-4xl mx-auto">
+        {/* Header */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-8"
+        >
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => navigate('/tenants')}
+              className="p-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl text-white hover:bg-white/20 transition-all duration-300"
             >
-              <option value="1">Daire</option>
-              <option value="2">Dükkan</option>
-            </select>
-            {errors.type && <p className="text-red-500 text-sm mt-1">{errors.type}</p>}
-
-            <input
-              name="contract_duration"
-              placeholder="Sözleşme Süresi (Ay)"
-              type="number"
-              className={`p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 ${getBorderColor('contract_duration')} transition duration-200`}
-              value={form.contract_duration}
-              onChange={handleChange}
-            />
-            {errors.contract_duration && <p className="text-red-500 text-sm mt-1">{errors.contract_duration}</p>}
-
-            <input
-              name="rent_amount"
-              placeholder="Kira Tutarı (₺)"
-              type="number"
-              className={`p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 ${getBorderColor('rent_amount')} transition duration-200`}
-              value={form.rent_amount}
-              onChange={handleChange}
-            />
-            {errors.rent_amount && <p className="text-red-500 text-sm mt-1">{errors.rent_amount}</p>}
+              <ArrowLeft className="w-6 h-6" />
+            </motion.button>
+            <div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-500 rounded-2xl flex items-center justify-center shadow-lg">
+              <Plus className="w-8 h-8 text-white" />
+            </div>
           </div>
+          <h1 className="text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4">
+            Yeni Kiracı Ekle
+          </h1>
+          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
+            Formu doldurarak hızlıca yeni bir kiracı kaydı oluşturun
+          </p>
+        </motion.div>
 
-          <input
-            name="start_date"
-            type="date"
-            className={`w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 ${getBorderColor('start_date')} transition duration-200`}
-            value={form.start_date}
-            onChange={handleChange}
-          />
-          {errors.start_date && <p className="text-red-500 text-sm mt-1">{errors.start_date}</p>}
+        {/* Form Card */}
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 shadow-2xl"
+        >
+          {apiError && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-red-500/20 border border-red-400/50 text-red-200 px-6 py-4 rounded-2xl mb-8 flex items-center gap-3"
+            >
+              <AlertCircle className="w-5 h-5 flex-shrink-0" />
+              {apiError}
+            </motion.div>
+          )}
 
-          <textarea
-            name="description"
-            placeholder="Açıklama"
-            className={`w-full p-3 border rounded-xl shadow-sm focus:outline-none focus:ring-2 resize-none ${getBorderColor('description')} transition duration-200`}
-            rows={3}
-            value={form.description}
-            onChange={handleChange}
-          />
-          {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description}</p>}
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Personal Information */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                <User className="w-6 h-6 text-blue-400" />
+                Kişisel Bilgiler
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="space-y-2">
+                  <div className="relative group">
+                    <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300 group-focus-within:text-blue-400 transition-colors duration-300" />
+                    <input
+                      name="name"
+                      placeholder="Ad"
+                      className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm ${errors.name ? 'border-red-400' : form.name ? 'border-green-400' : ''}`}
+                      value={form.name}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.name && (
+                    <motion.p 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-red-300 text-sm flex items-center gap-2"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.name}
+                    </motion.p>
+                  )}
+                </div>
 
-          <button
-            type="submit"
-            className="w-full py-3 rounded-xl font-semibold bg-blue-600 text-white hover:bg-blue-700 transition duration-300 shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
-          >
-            Kiracıyı Ekle
-          </button>
-        </form>
+                <div className="space-y-2">
+                  <div className="relative group">
+                    <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300 group-focus-within:text-blue-400 transition-colors duration-300" />
+                    <input
+                      name="surname"
+                      placeholder="Soyad"
+                      className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm ${errors.surname ? 'border-red-400' : form.surname ? 'border-green-400' : ''}`}
+                      value={form.surname}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.surname && (
+                    <motion.p 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-red-300 text-sm flex items-center gap-2"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.surname}
+                    </motion.p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="relative group">
+                  <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-blue-300 group-focus-within:text-blue-400 transition-colors duration-300" />
+                  <input
+                    name="phone"
+                    placeholder="Telefon (05XX XXX XX XX)"
+                    type="tel"
+                    className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm ${errors.phone ? 'border-red-400' : form.phone ? 'border-green-400' : ''}`}
+                    value={form.phone}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.phone && (
+                  <motion.p 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-red-300 text-sm flex items-center gap-2"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.phone}
+                  </motion.p>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <div className="relative group">
+                  <MapPin className="absolute left-4 top-4 text-blue-300 group-focus-within:text-blue-400 transition-colors duration-300" />
+                  <textarea
+                    name="address"
+                    placeholder="Adres"
+                    className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm resize-none ${errors.address ? 'border-red-400' : form.address ? 'border-green-400' : ''}`}
+                    rows={3}
+                    value={form.address}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.address && (
+                  <motion.p 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-red-300 text-sm flex items-center gap-2"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.address}
+                  </motion.p>
+                )}
+              </div>
+            </div>
+
+            {/* Property Information */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                <Building2 className="w-6 h-6 text-purple-400" />
+                Mülk Bilgileri
+              </h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="space-y-2">
+                  <div className="relative group">
+                    {form.type === '1' ? <Home className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-300 group-focus-within:text-purple-400 transition-colors duration-300" /> : <Store className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-300 group-focus-within:text-purple-400 transition-colors duration-300" />}
+                    <select
+                      name="type"
+                      className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm ${errors.type ? 'border-red-400' : form.type ? 'border-green-400' : ''}`}
+                      value={form.type}
+                      onChange={handleChange}
+                    >
+                      <option value="1" className="bg-gray-800 text-white">Daire</option>
+                      <option value="2" className="bg-gray-800 text-white">Dükkan</option>
+                    </select>
+                  </div>
+                  {errors.type && (
+                    <motion.p 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-red-300 text-sm flex items-center gap-2"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.type}
+                    </motion.p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="relative group">
+                    <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-300 group-focus-within:text-purple-400 transition-colors duration-300" />
+                    <input
+                      name="contract_duration"
+                      placeholder="Sözleşme Süresi (Ay)"
+                      type="number"
+                      className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm ${errors.contract_duration ? 'border-red-400' : form.contract_duration ? 'border-green-400' : ''}`}
+                      value={form.contract_duration}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.contract_duration && (
+                    <motion.p 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-red-300 text-sm flex items-center gap-2"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.contract_duration}
+                    </motion.p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
+                  <div className="relative group">
+                    <DollarSign className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-300 group-focus-within:text-purple-400 transition-colors duration-300" />
+                    <input
+                      name="rent_amount"
+                      placeholder="Kira Tutarı (₺)"
+                      type="number"
+                      className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm ${errors.rent_amount ? 'border-red-400' : form.rent_amount ? 'border-green-400' : ''}`}
+                      value={form.rent_amount}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  {errors.rent_amount && (
+                    <motion.p 
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-red-300 text-sm flex items-center gap-2"
+                    >
+                      <AlertCircle className="w-4 h-4" />
+                      {errors.rent_amount}
+                    </motion.p>
+                  )}
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="relative group">
+                  <Calendar className="absolute left-4 top-1/2 transform -translate-y-1/2 text-purple-300 group-focus-within:text-purple-400 transition-colors duration-300" />
+                  <input
+                    name="start_date"
+                    type="date"
+                    className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm ${errors.start_date ? 'border-red-400' : form.start_date ? 'border-green-400' : ''}`}
+                    value={form.start_date}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.start_date && (
+                  <motion.p 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-red-300 text-sm flex items-center gap-2"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.start_date}
+                  </motion.p>
+                )}
+              </div>
+            </div>
+
+            {/* Additional Information */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-white mb-4 flex items-center gap-3">
+                <FileText className="w-6 h-6 text-green-400" />
+                Ek Bilgiler
+              </h3>
+              
+              <div className="space-y-2">
+                <div className="relative group">
+                  <FileText className="absolute left-4 top-4 text-green-300 group-focus-within:text-green-400 transition-colors duration-300" />
+                  <textarea
+                    name="description"
+                    placeholder="Açıklama"
+                    className={`w-full pl-12 pr-4 py-4 bg-white/10 border border-white/20 rounded-2xl text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-transparent transition-all duration-300 backdrop-blur-sm resize-none ${errors.description ? 'border-red-400' : form.description ? 'border-green-400' : ''}`}
+                    rows={3}
+                    value={form.description}
+                    onChange={handleChange}
+                  />
+                </div>
+                {errors.description && (
+                  <motion.p 
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className="text-red-300 text-sm flex items-center gap-2"
+                  >
+                    <AlertCircle className="w-4 h-4" />
+                    {errors.description}
+                  </motion.p>
+                )}
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              type="submit"
+              disabled={isLoading}
+              className="w-full py-4 px-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 flex items-center justify-center gap-3 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? (
+                <>
+                  <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                  Ekleniyor...
+                </>
+              ) : (
+                <>
+                  <Save className="w-5 h-5" />
+                  Kiracıyı Ekle
+                </>
+              )}
+            </motion.button>
+          </form>
+        </motion.div>
       </div>
     </div>
   );
