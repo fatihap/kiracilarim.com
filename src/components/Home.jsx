@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { 
   ArrowRight, 
   Shield, 
@@ -25,6 +26,40 @@ const Home = () => {
   }, []);
 
   return (
+    <>
+      <Helmet>
+        <title>Kira Takip Sistemi ve Yönetim Platformu | Kiracılarım.com</title>
+        <meta 
+          name="description" 
+          content="Kiracılarım.com ile kira takip süreçlerinizi dijitalleştirin. Otomatik ödeme takibi, anlık bildirimler ve güvenli belge saklama ile modern kira yönetimi." 
+        />
+        <meta 
+          name="keywords" 
+          content="kira takip, kira takip sistemi, kiracı yönetimi, kira ödeme takibi, dijital kira yönetimi, kiracılarım" 
+        />
+        <script type="application/ld+json">
+          {`
+            {
+              "@context": "https://schema.org",
+              "@type": "SoftwareApplication",
+              "name": "Kiracılarım.com - Kira Takip Sistemi",
+              "operatingSystem": "Android, IOS, Web",
+              "applicationCategory": "FinanceApplication",
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8", 
+                "ratingCount": "125"
+              },
+              "offers": {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "TRY"
+              }
+            }
+          `}
+        </script>
+      </Helmet>
+
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 relative overflow-hidden pt-20">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">
@@ -221,12 +256,10 @@ const Home = () => {
             </div>
           </motion.div>
         </div>
+  
       </div>
-
-
-
     </div>
-    
+          </>
   );
 };
 
