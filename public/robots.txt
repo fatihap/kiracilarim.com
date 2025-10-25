@@ -1,0 +1,27 @@
+User-agent: *
+Allow: /
+
+Uygulama içi kritik olmayan veya hassas sayfaları engelle (Örn: Giriş, Kayıt, Yönetim Paneli)
+
+Bu sayfaların arama sonuçlarında görünmesini istemeyiz.
+
+Disallow: /login
+Disallow: /register
+Disallow: /dashboard
+Disallow: /tenants
+Disallow: /settings
+
+
+Sitemap: https://giris.kiracilarim.com/sitemap.xml
+
+Ek Bilgi:
+
+Google'ın görselleri taramasına izin ver.
+
+User-agent: Googlebot-Image
+Allow: /
+
+Google'ın video içeriğini taramasına izin ver.
+
+User-agent: Googlebot-Video
+Allow: /
