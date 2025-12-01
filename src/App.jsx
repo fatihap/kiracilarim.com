@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Helmet } from 'react-helmet-async';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 // Components
@@ -47,6 +48,10 @@ function App() {
 
   return (
     <Router>
+      <Helmet>
+        <html lang="tr" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      </Helmet>
       <RouteTracker />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50 flex flex-col">
         <Navbar

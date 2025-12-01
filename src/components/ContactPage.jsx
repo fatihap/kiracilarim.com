@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Helmet } from 'react-helmet-async';
 import { 
   Mail, 
   Phone, 
@@ -133,8 +134,18 @@ const ContactPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-10 px-4 pt-24">
-      <div className="max-w-7xl mx-auto">
+    <>
+      <Helmet>
+        <title>İletişim - Kiracılarım.com | Destek ve Yardım</title>
+        <meta name="description" content="Kiracılarım.com ile iletişime geçin. Sorularınız, önerileriniz veya destek talepleriniz için bizimle iletişime geçin. 7/24 email desteği." />
+        <meta name="keywords" content="kiracılarım iletişim, destek, yardım, kira takip destek, müşteri hizmetleri" />
+        <meta property="og:title" content="İletişim - Kiracılarım.com | Destek ve Yardım" />
+        <meta property="og:description" content="Kiracılarım.com ile iletişime geçin. Sorularınız, önerileriniz veya destek talepleriniz için bizimle iletişime geçin." />
+        <meta property="og:url" content="https://kiracilarim.com/contact" />
+        <link rel="canonical" href="https://kiracilarim.com/contact" />
+      </Helmet>
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-10 px-4 pt-24">
+        <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
@@ -400,6 +411,7 @@ const ContactPage = () => {
         </motion.div>
       </div>
     </div>
+    </>
   );
 };
 

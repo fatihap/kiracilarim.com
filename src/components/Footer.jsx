@@ -159,10 +159,13 @@ const Footer = () => {
             <p className="text-gray-400 text-sm mb-2">Mobil uygulamayı indirin</p>
             <div className="flex justify-center gap-3">
               <motion.a
-                href="#"
+                href="https://play.google.com/store/apps/details?id=com.fatalsoft.kiratakip"
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 px-4 py-2 rounded-lg transition-colors duration-300"
+                aria-label="Google Play'den Kiracılarım uygulamasını indir"
               >
                 <Download className="w-4 h-4" />
                 <span className="text-sm">Google Play</span>
