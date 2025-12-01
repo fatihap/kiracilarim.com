@@ -623,51 +623,10 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Footer / Sitemap Section (Site hiyerarşisi için önemli) */}
-      <footer className="relative z-10 bg-slate-900/50 border-t border-white/10 py-12" aria-labelledby="footer-heading">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 id="footer-heading" className="sr-only">Site Navigasyonu</h2>
-          <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
-            {/* Logo ve Kısa Açıklama */}
-            <div className="col-span-2 lg:col-span-1">
-              <Link to="/" className="text-2xl font-extrabold text-white" aria-label="Kiracılarım.com ana sayfaya dön">
-                Kiracılarım<span className="text-blue-400">.com</span>
-              </Link>
-              <p className="mt-4 text-sm text-blue-200">
-                Gayrimenkul sahipleri ve emlak yöneticileri için kira takibi ve yönetim çözümü.
-              </p>
-            </div>
-            
-            {/* Link Grupları (Footer Sitemap Rolü) */}
-            {footerLinks.map((section, index) => (
-              <div key={index}>
-                <h3 className="text-base font-semibold text-white tracking-wider uppercase">{section.title}</h3>
-                <ul role="list" className="mt-4 space-y-4">
-                  {section.links.map((link, linkIndex) => (
-                    <li key={linkIndex}>
-                      <Link
-                        to={link.path}
-                        className="text-sm text-blue-200 hover:text-blue-400 transition-colors duration-200"
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
+   
+   
+          
 
-          <div className="mt-12 border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between">
-            <p className="text-sm text-blue-300">
-              &copy; {new Date().getFullYear()} Kiracılarım.com. Tüm hakları saklıdır.
-            </p>
-            <p className="text-xs text-blue-400 mt-2 md:mt-0">
-                Uygulama ID: {appId}
-            </p>
-          </div>
-        </div>
-      </footer>
     </div>
   </>
   );
