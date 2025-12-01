@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +14,21 @@ import AddTenantPage from './components/AddTenantPage';
 import EditTenantPage from './components/EditTenantPage';
 import Profile from './components/Profile';
 import ContactPage from './components/ContactPage';
+// Analytics
+import { trackPageView } from './utils/analytics';
+
+// Route tracking component
+const RouteTracker = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Her route değişikliğinde sayfa görüntüleme event'i gönder
+    trackPageView(location.pathname, document.title);
+  }, [location]);
+
+  return null;
+};
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
@@ -32,6 +47,7 @@ function App() {
 
   return (
     <Router>
+      <RouteTracker />
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-gray-50 flex flex-col">
         <Navbar
           isLoggedIn={isLoggedIn}

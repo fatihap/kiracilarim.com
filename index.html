@@ -1,10 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/" href="/src/assets/app_icon.png" />
+    <link rel="icon" type="image/png" href="/src/assets/app_icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kiracılarım.com</title>
+    
+    <!-- Resource Hints for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+    <link rel="dns-prefetch" href="https://play.google.com" />
+    <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
+    
+    <!-- Google Analytics - GA4 -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX', {
+        page_path: window.location.pathname,
+        page_title: document.title,
+      });
+    </script>
+    
+    <title>Kiracılarım.com - Kira Takip Sistemi</title>
   </head>
   <body>
     <div id="root"></div>

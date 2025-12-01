@@ -12,7 +12,7 @@ Disallow: /tenants
 Disallow: /settings
 
 
-Sitemap: https://giris.kiracilarim.com/sitemap.xml
+Sitemap: https://kiracilarim.com/sitemap.xml
 
 Ek Bilgi:
 

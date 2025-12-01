@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
+import { trackButtonClick, trackLinkClick } from '../utils/analytics';
 import { 
   ArrowRight, 
   Shield, 
@@ -64,39 +65,271 @@ const Home = () => {
     <>
       {/* Helmet: SEO ve Sayfa Başlığı Yönetimi */}
       <Helmet>
+        {/* Primary Meta Tags */}
         <title>Kira Takip Sistemi ve Yönetim Platformu | Kiracılarım.com</title>
         <meta 
+          name="title" 
+          content="Kira Takip Sistemi ve Yönetim Platformu | Kiracılarım.com" 
+        />
+        <meta 
           name="description" 
-          content="Kiracılarım.com ile kira takip süreçlerinizi dijitalleştirin. Otomatik ödeme takibi, anlık bildirimler ve güvenli belge saklama ile modern kira yönetimi." 
+          content="Kiracılarım.com ile kira takip süreçlerinizi dijitalleştirin. Otomatik ödeme takibi, anlık bildirimler, güvenli belge saklama ve detaylı finansal raporlama ile modern kira yönetimi. 1500+ mutlu kullanıcı, 5000+ yönetilen sözleşme. Ücretsiz deneyin!" 
         />
         <meta 
           name="keywords" 
-          content="kira takip, kira takip sistemi, kiracı yönetimi, kira ödeme takibi, dijital kira yönetimi, kiracılarım, emlak yönetimi, gayrimenkul yazılımı" 
+          content="kira takip, kira takip sistemi, kiracı yönetimi, kira ödeme takibi, dijital kira yönetimi, kiracılarım, emlak yönetimi, gayrimenkul yazılımı, kira takip uygulaması, kira yönetim yazılımı, otomatik kira takibi, kira bildirim sistemi, belge yönetimi, finansal raporlama" 
         />
-        {/* Canonical Link: Bu sayfanın orijinal kaynağını belirtir */}
+        <meta name="author" content="Kiracılarım.com" />
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+        <meta name="language" content="Turkish" />
+        <meta name="revisit-after" content="7 days" />
+        <meta name="rating" content="general" />
+        
+        {/* Canonical Link */}
         <link rel="canonical" href="https://kiracilarim.com/" />
         
-        {/* Schema.org (JSON-LD) verisi - SoftwareApplication güncel ve uygun */}
+        {/* Resource Hints for Performance */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://play.google.com" />
+        <link rel="dns-prefetch" href="https://upload.wikimedia.org" />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://kiracilarim.com/" />
+        <meta property="og:title" content="Kira Takip Sistemi ve Yönetim Platformu | Kiracılarım.com" />
+        <meta property="og:description" content="Kiracılarım.com ile kira takip süreçlerinizi dijitalleştirin. Otomatik ödeme takibi, anlık bildirimler ve güvenli belge saklama ile modern kira yönetimi. 1500+ mutlu kullanıcı, 5000+ yönetilen sözleşme." />
+        <meta property="og:image" content="https://kiracilarim.com/og-image.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content="Kiracılarım.com - Dijital Kira Takip ve Yönetim Sistemi" />
+        <meta property="og:site_name" content="Kiracılarım.com" />
+        <meta property="og:locale" content="tr_TR" />
+        
+        {/* Twitter Card */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://kiracilarim.com/" />
+        <meta name="twitter:title" content="Kira Takip Sistemi ve Yönetim Platformu | Kiracılarım.com" />
+        <meta name="twitter:description" content="Kiracılarım.com ile kira takip süreçlerinizi dijitalleştirin. Otomatik ödeme takibi, anlık bildirimler ve güvenli belge saklama ile modern kira yönetimi." />
+        <meta name="twitter:image" content="https://kiracilarim.com/twitter-image.jpg" />
+        <meta name="twitter:image:alt" content="Kiracılarım.com - Dijital Kira Takip ve Yönetim Sistemi" />
+        <meta name="twitter:creator" content="@kiracilarim" />
+        <meta name="twitter:site" content="@kiracilarim" />
+        
+        {/* Mobile Optimization */}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+        <meta name="theme-color" content="#1e3a8a" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Kiracılarım.com" />
+        
+        {/* Additional SEO Tags */}
+        <meta name="geo.region" content="TR" />
+        <meta name="geo.placename" content="Turkey" />
+        <meta name="application-name" content="Kiracılarım.com" />
+        <meta name="msapplication-TileColor" content="#1e3a8a" />
+        
+        {/* Schema.org (JSON-LD) - Multiple Schemas for Rich Snippets */}
         <script type="application/ld+json">
-          {`
-            {
+          {JSON.stringify({
               "@context": "https://schema.org",
               "@type": "SoftwareApplication",
               "name": "Kiracılarım.com - Kira Takip Sistemi",
-              "operatingSystem": "Android, IOS, Web",
               "applicationCategory": "FinanceApplication",
+            "operatingSystem": "Android, iOS, Web",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "TRY",
+              "availability": "https://schema.org/InStock"
+            },
               "aggregateRating": {
                 "@type": "AggregateRating",
                 "ratingValue": "4.8", 
-                "ratingCount": "125"
-              },
-              "offers": {
-                "@type": "Offer",
-                "price": "0",
-                "priceCurrency": "TRY"
-              }
+              "ratingCount": "125",
+              "bestRating": "5",
+              "worstRating": "1"
+            },
+            "description": "Dijital kira takip ve yönetim sistemi. Otomatik ödeme takibi, anlık bildirimler ve güvenli belge saklama.",
+            "url": "https://kiracilarim.com",
+            "screenshot": "https://kiracilarim.com/screenshot.jpg",
+            "softwareVersion": "2.0",
+            "releaseNotes": "Modern kira yönetimi için geliştirilmiş özellikler",
+            "author": {
+              "@type": "Organization",
+              "name": "Kiracılarım.com"
             }
-          `}
+          })}
+        </script>
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            "name": "Kiracılarım.com",
+            "url": "https://kiracilarim.com",
+            "logo": "https://kiracilarim.com/logo.png",
+            "description": "Gayrimenkul sahipleri ve emlak yöneticileri için kira takibi ve yönetim çözümü",
+            "sameAs": [
+              "https://www.facebook.com/kiracilarim",
+              "https://twitter.com/kiracilarim",
+              "https://www.linkedin.com/company/kiracilarim"
+            ],
+            "contactPoint": {
+              "@type": "ContactPoint",
+              "contactType": "customer service",
+              "availableLanguage": "Turkish"
+            },
+            "address": {
+              "@type": "PostalAddress",
+              "addressCountry": "TR"
+            }
+          })}
+        </script>
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Kiracılarım.com",
+            "url": "https://kiracilarim.com",
+            "description": "Dijital kira takip ve yönetim sistemi",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://kiracilarim.com/search?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Kiracılarım.com"
+            }
+          })}
+        </script>
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Service",
+            "serviceType": "Kira Takip ve Yönetim Hizmeti",
+            "provider": {
+              "@type": "Organization",
+              "name": "Kiracılarım.com"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "Turkey"
+            },
+            "description": "Otomatik kira takibi, ödeme bildirimleri, belge yönetimi ve finansal raporlama hizmetleri",
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Kira Yönetim Hizmetleri",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Otomatik Kira Takibi"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Anlık Bildirimler"
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Dijital Belge Arşivi"
+                  }
+                },
+                {
+                "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Finansal Raporlama"
+                  }
+                }
+              ]
+            }
+          })}
+        </script>
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Ana Sayfa",
+                "item": "https://kiracilarim.com"
+              }
+            ]
+          })}
+        </script>
+        
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Kiracılarım.com nedir ve ne işe yarar?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Kiracılarım.com, gayrimenkul sahipleri ve emlak yöneticileri için geliştirilmiş dijital bir kira takip ve yönetim sistemidir. Otomatik ödeme takibi, anlık bildirimler, güvenli belge saklama ve detaylı finansal raporlama özellikleri sunar."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Kiracılarım.com ücretsiz mi?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Evet, Kiracılarım.com temel özellikleriyle ücretsiz olarak kullanılabilir. Kira takibi, bildirimler ve belge yönetimi gibi temel işlevler tamamen ücretsizdir."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Kira ödemelerini nasıl takip edebilirim?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Sisteme kiracı bilgilerinizi ve kira sözleşmelerinizi ekledikten sonra, sistem otomatik olarak ödeme tarihlerini takip eder. Geciken ödemeler için anında bildirim alırsınız ve tahsilat sürecinizi kolayca yönetebilirsiniz."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Belgelerim güvende mi?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Evet, tüm belgeleriniz 256-bit SSL şifreleme ile korunur. Kira kontratları, faturalar ve diğer önemli belgeler yüksek güvenlikli sunucularda saklanır ve sadece siz erişebilirsiniz."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Mobil uygulama mevcut mu?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Evet, Kiracılarım.com mobil uygulaması Google Play Store'da mevcuttur. Android cihazlarınızdan uygulamayı indirerek tüm özelliklere erişebilirsiniz. iOS uygulaması yakında gelecektir."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Birden fazla gayrimenkulü yönetebilir miyim?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Evet, Kiracılarım.com ile sınırsız sayıda gayrimenkul ve kiracı yönetebilirsiniz. Tüm kira sözleşmelerinizi tek bir platformdan kolayca yönetebilirsiniz."
+                }
+              }
+            ]
+          })}
         </script>
       </Helmet>
 
@@ -145,6 +378,7 @@ const Home = () => {
               {isLoggedIn ? (
                 <Link
                   to="/dashboard"
+                  onClick={() => trackButtonClick('Yönetim Paneline Git', 'home-hero')}
                   className="group px-8 py-4 text-lg font-semibold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
                 >
                   Yönetim Paneline Git
@@ -154,6 +388,7 @@ const Home = () => {
                 <>
                   <Link
                     to="/login"
+                    onClick={() => trackButtonClick('Hemen Başla (Giriş Yap)', 'home-hero')}
                     className="group px-8 py-4 text-lg font-semibold rounded-2xl text-white bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 shadow-2xl transform hover:scale-105 transition-all duration-300 flex items-center justify-center gap-2"
                   >
                     Hemen Başla (Giriş Yap)
@@ -161,6 +396,7 @@ const Home = () => {
                   </Link>
                   <Link
                     to="/register"
+                    onClick={() => trackButtonClick('Ücretsiz Kayıt Ol', 'home-hero')}
                     className="px-8 py-4 text-lg font-semibold rounded-2xl text-blue-300 border-2 border-blue-400 bg-white/10 backdrop-blur-sm hover:bg-white/20 hover:border-blue-300 shadow-xl transform hover:scale-105 transition-all duration-300"
                   >
                     Ücretsiz Kayıt Ol
@@ -173,27 +409,29 @@ const Home = () => {
       </section>
 
       {/* Trust/Statistics Section (E-E-A-T için önemli) */}
-      <section className="relative z-10 py-12">
+      <section className="relative z-10 py-12" aria-labelledby="stats-heading">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 id="stats-heading" className="sr-only">İstatistikler ve Başarı Rakamları</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { icon: Users, value: '1500+', label: 'Mutlu Kullanıcı' },
-              { icon: Briefcase, value: '5000+', label: 'Yönetilen Sözleşme' },
-              { icon: TrendingUp, value: '99%', label: 'Başarılı Tahsilat Oranı' },
-              { icon: MessageSquare, value: '4.8/5', label: 'Kullanıcı Puanı' }
+              { icon: Users, value: '1500+', label: 'Mutlu Kullanıcı', ariaLabel: 'Bin beş yüz artı mutlu kullanıcı sayısı' },
+              { icon: Briefcase, value: '5000+', label: 'Yönetilen Sözleşme', ariaLabel: 'Beş bin artı yönetilen sözleşme sayısı' },
+              { icon: TrendingUp, value: '99%', label: 'Başarılı Tahsilat Oranı', ariaLabel: 'Yüzde doksan dokuz başarılı tahsilat oranı' },
+              { icon: MessageSquare, value: '4.8/5', label: 'Kullanıcı Puanı', ariaLabel: 'Dört virgül sekiz bölü beş kullanıcı puanı' }
             ].map((stat, index) => (
-              <motion.div
+              <motion.article
                 key={index}
                 variants={statCardVariants}
                 initial="hidden"
                 animate="visible"
                 transition={{ delay: 0.1 * index }}
                 className="text-center p-4 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+                aria-label={stat.ariaLabel}
               >
-                <stat.icon className="w-8 h-8 mx-auto text-blue-400 mb-2" />
-                <p className="text-3xl font-extrabold text-white">{stat.value}</p>
+                <stat.icon className="w-8 h-8 mx-auto text-blue-400 mb-2" aria-hidden="true" />
+                <p className="text-3xl font-extrabold text-white" aria-label={`${stat.value} ${stat.label}`}>{stat.value}</p>
                 <p className="text-sm text-blue-200 uppercase tracking-widest">{stat.label}</p>
-              </motion.div>
+              </motion.article>
             ))}
           </div>
         </div>
@@ -264,8 +502,8 @@ const Home = () => {
                 className="group relative bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl p-8 hover:bg-white/20 transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl"
                 role="article" // Her özellik kartı için semantik rol
               >
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300`}>
-                  <feature.icon className="w-8 h-8 text-white" />
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-r ${feature.gradient} flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300`} aria-hidden="true">
+                  <feature.icon className="w-8 h-8 text-white" aria-hidden="true" />
                 </div>
                 <h3 className="text-2xl font-bold text-white mb-4">{feature.title}</h3>
                 <p className="text-blue-100 leading-relaxed">{feature.desc}</p>
@@ -296,6 +534,7 @@ const Home = () => {
                 href="https://play.google.com/store/apps/details?id=com.fatalsoft.kiratakip"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackLinkClick('https://play.google.com/store/apps/details?id=com.fatalsoft.kiratakip', 'Google Play Download')}
                 className="group"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -303,21 +542,84 @@ const Home = () => {
               >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                  alt="Google Play'den indir"
+                  alt="Kiracılarım.com uygulamasını Google Play Store'dan indirin"
+                  width="180"
+                  height="70"
                   className="h-16 group-hover:brightness-110 transition-all duration-300"
+                  loading="lazy"
                 />
               </motion.a>
               <motion.div 
                 className="flex items-center gap-3 border border-white/30 px-6 py-4 rounded-2xl bg-white/10 text-white/70 cursor-not-allowed"
                 whileHover={{ scale: 1.02 }}
+                aria-label="App Store indirme bağlantısı yakında gelecek"
               >
-                <svg className="w-6 h-6 text-white/50" fill="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-white/50" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path d="M17 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2z" />
                 </svg>
                 <span className="font-medium">App Store: Çok Yakında</span>
               </motion.div>
             </div>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section - SEO için önemli */}
+      <section className="relative z-10 py-20" aria-labelledby="faq-heading">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 id="faq-heading" className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Sıkça Sorulan Sorular
+            </h2>
+            <p className="text-xl text-blue-100">
+              Kiracılarım.com hakkında merak ettikleriniz
+            </p>
+          </motion.div>
+
+          <div className="space-y-4">
+            {[
+              {
+                question: "Kiracılarım.com nedir ve ne işe yarar?",
+                answer: "Kiracılarım.com, gayrimenkul sahipleri ve emlak yöneticileri için geliştirilmiş dijital bir kira takip ve yönetim sistemidir. Otomatik ödeme takibi, anlık bildirimler, güvenli belge saklama ve detaylı finansal raporlama özellikleri sunar."
+              },
+              {
+                question: "Kiracılarım.com ücretsiz mi?",
+                answer: "Evet, Kiracılarım.com temel özellikleriyle ücretsiz olarak kullanılabilir. Kira takibi, bildirimler ve belge yönetimi gibi temel işlevler tamamen ücretsizdir."
+              },
+              {
+                question: "Kira ödemelerini nasıl takip edebilirim?",
+                answer: "Sisteme kiracı bilgilerinizi ve kira sözleşmelerinizi ekledikten sonra, sistem otomatik olarak ödeme tarihlerini takip eder. Geciken ödemeler için anında bildirim alırsınız ve tahsilat sürecinizi kolayca yönetebilirsiniz."
+              },
+              {
+                question: "Belgelerim güvende mi?",
+                answer: "Evet, tüm belgeleriniz 256-bit SSL şifreleme ile korunur. Kira kontratları, faturalar ve diğer önemli belgeler yüksek güvenlikli sunucularda saklanır ve sadece siz erişebilirsiniz."
+              },
+              {
+                question: "Mobil uygulama mevcut mu?",
+                answer: "Evet, Kiracılarım.com mobil uygulaması Google Play Store'da mevcuttur. Android cihazlarınızdan uygulamayı indirerek tüm özelliklere erişebilirsiniz. iOS uygulaması yakında gelecektir."
+              },
+              {
+                question: "Birden fazla gayrimenkulü yönetebilir miyim?",
+                answer: "Evet, Kiracılarım.com ile sınırsız sayıda gayrimenkul ve kiracı yönetebilirsiniz. Tüm kira sözleşmelerinizi tek bir platformdan kolayca yönetebilirsiniz."
+              }
+            ].map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 * index }}
+                className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-6 hover:bg-white/15 transition-all duration-300"
+              >
+                <h3 className="text-xl font-bold text-white mb-3">{faq.question}</h3>
+                <p className="text-blue-100 leading-relaxed">{faq.answer}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -328,7 +630,7 @@ const Home = () => {
           <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-5">
             {/* Logo ve Kısa Açıklama */}
             <div className="col-span-2 lg:col-span-1">
-              <Link to="/" className="text-2xl font-extrabold text-white">
+              <Link to="/" className="text-2xl font-extrabold text-white" aria-label="Kiracılarım.com ana sayfaya dön">
                 Kiracılarım<span className="text-blue-400">.com</span>
               </Link>
               <p className="mt-4 text-sm text-blue-200">

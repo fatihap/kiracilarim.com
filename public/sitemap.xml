@@ -4,13 +4,61 @@
       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
 
 <url>
-  <loc>https://giris.kiracilarim.com/</loc>
-  <lastmod>2025-09-12T08:38:29+00:00</lastmod>
+  <loc>https://kiracilarim.com/</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>1.0</priority>
 </url>
 
+<url>
+  <loc>https://kiracilarim.com/features</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://kiracilarim.com/pricing</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.8</priority>
+</url>
+
+<url>
+  <loc>https://kiracilarim.com/about</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://kiracilarim.com/blog</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>weekly</changefreq>
+  <priority>0.7</priority>
+</url>
+
+<url>
+  <loc>https://kiracilarim.com/contact</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>monthly</changefreq>
+  <priority>0.6</priority>
+</url>
+
+<url>
+  <loc>https://kiracilarim.com/privacy</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.5</priority>
+</url>
+
+<url>
+  <loc>https://kiracilarim.com/terms</loc>
+  <lastmod>2025-01-27T00:00:00+00:00</lastmod>
+  <changefreq>yearly</changefreq>
+  <priority>0.5</priority>
+</url>
 
 </urlset>
